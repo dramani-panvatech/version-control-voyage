@@ -19,16 +19,21 @@ export type BookingStep =
   | 'confirmation'
   | 'success';
 
+interface Provider {
+  id: string;
+  name: string;
+  specialty: string;
+  rating: number;
+  image: string;
+  bio: string;
+  nextAvailable: string;
+  experience: string;
+}
+
 export interface BookingData {
   appointmentType?: 'in-person' | 'telehealth';
   department?: string;
-  provider?: {
-    id: string;
-    name: string;
-    specialty: string;
-    rating: number;
-    image: string;
-  };
+  provider?: Provider;
   dateTime?: {
     date: string;
     time: string;
