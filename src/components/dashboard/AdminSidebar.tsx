@@ -4,7 +4,14 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { 
   Calendar, 
   Users, 
-  Settings
+  Settings,
+  LayoutDashboard,
+  UserCheck,
+  Clock,
+  Package,
+  CreditCard,
+  HelpCircle,
+  User
 } from 'lucide-react';
 import {
   Sidebar,
@@ -22,45 +29,61 @@ const AdminSidebar = () => {
   const location = useLocation();
 
   const menuItems = [
-    { title: 'Dashboard', url: '/dashboard', icon: Calendar },
+    { title: 'Dashboard', url: '/dashboard', icon: LayoutDashboard },
     { title: 'Customers', url: '/dashboard/customers', icon: Users },
-    { title: 'Provider', url: '/dashboard/provider', icon: Users },
+    { title: 'Provider', url: '/dashboard/provider', icon: UserCheck },
     { title: 'Calendar', url: '/dashboard/calendar', icon: Calendar },
-    { title: 'Services', url: '/dashboard/services', icon: Settings },
-    { title: 'Payment', url: '/dashboard/payment', icon: Settings },
+    { title: 'Services', url: '/dashboard/services', icon: Package },
+    { title: 'Payment', url: '/dashboard/payment', icon: CreditCard },
     { title: 'Settings', url: '/dashboard/settings', icon: Settings },
   ];
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <Sidebar className="w-64 border-r border-gray-200 bg-white">
-      <SidebarHeader className="p-6 border-b border-gray-200">
-        <div className="flex items-center space-x-2">
-          <Calendar className="h-8 w-8 text-blue-600" />
-          <span className="text-xl font-bold">FlowTime</span>
+    <Sidebar className="w-64 border-r border-slate-200 bg-white shadow-sm">
+      <SidebarHeader className="px-6 py-6 border-b border-slate-100">
+        <div className="flex items-center space-x-3">
+          <div className="h-10 w-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+            <Clock className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-slate-900">FlowTime</h1>
+            <p className="text-xs text-slate-500 font-medium">Admin Dashboard</p>
+          </div>
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="px-4">
+      <SidebarContent className="px-4 py-6">
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className="space-y-1">
+            <SidebarMenu className="space-y-2">
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
                       className={({ isActive }) =>
-                        `flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                        `group flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                           isActive
-                            ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
-                            : 'text-gray-700 hover:bg-gray-100'
+                            ? 'bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 border border-blue-200 shadow-sm'
+                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 hover:shadow-sm'
                         }`
                       }
                     >
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.title}</span>
+                      {({ isActive }) => (
+                        <>
+                          <item.icon 
+                            className={`h-5 w-5 transition-colors duration-200 ${
+                              isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'
+                            }`}
+                          />
+                          <span className="font-medium">{item.title}</span>
+                          {isActive && (
+                            <div className="ml-auto h-2 w-2 bg-blue-500 rounded-full animate-pulse" />
+                          )}
+                        </>
+                      )}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -70,21 +93,34 @@ const AdminSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-4 border-t border-gray-200">
+      <SidebarFooter className="px-4 py-6 border-t border-slate-100 bg-slate-50/50">
         <div className="space-y-2">
           <NavLink
             to="/dashboard/help"
-            className="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100"
+            className={({ isActive }) =>
+              `flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                isActive
+                  ? 'bg-gradient-to-r from-green-50 to-green-100 text-green-700 border border-green-200'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white hover:shadow-sm'
+              }`
+            }
           >
-            <Settings className="h-5 w-5" />
+            <HelpCircle className="h-5 w-5" />
             <span>Help & Support</span>
           </NavLink>
+          
           <NavLink
             to="/dashboard/profile"
-            className="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100"
+            className={({ isActive }) =>
+              `flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                isActive
+                  ? 'bg-gradient-to-r from-purple-50 to-purple-100 text-purple-700 border border-purple-200'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white hover:shadow-sm'
+              }`
+            }
           >
-            <div className="h-5 w-5 bg-blue-600 rounded-full flex items-center justify-center text-xs text-white font-bold">
-              U
+            <div className="h-6 w-6 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+              <User className="h-3 w-3 text-white" />
             </div>
             <span>Your Profile</span>
           </NavLink>
