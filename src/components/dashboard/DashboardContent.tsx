@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { Card } from '@/components/ui/card';
+import { Calendar, Users, Settings } from 'lucide-react';
 
 const DashboardContent = () => {
   return (
